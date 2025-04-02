@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = htmlspecialchars($_POST['name']);
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $message = htmlspecialchars($_POST['message']);
+    
+    $to = "evanapexit@gmail.com";
+    $subject = "New Contact Form Submission from $name";
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+    if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($name) && !empty($message)) {
+        mail($to, $subject, $message, $headers);
+        $success = true;
+    } else {
+        $error = "Please fill in all fields correctly";
+    }
+}
+?>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex IT Services</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="logo">APEX IT</span>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <canvas id="binaryCanvas"></canvas>
+        <div class="hero-content">
+            <h1 class="hero-title">Innovative Tech Solutions</h1>
+            <p class="hero-subtitle">Transforming businesses through cutting-edge technology</p>
+        </div>
+    </section>
+
+    <section id="about" class="section hidden">
+        <div class="content-container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <div class="about-highlight">
+                    <p class="about-text">Apex IT Services is a dynamic tech startup focused on providing comprehensive IT services to businesses of all sizes. Founded by Evan Marais, a passionate and skilled IT professional, Apex IT Services was created with the mission of empowering businesses by simplifying their technology needs.<br><br>
+                    We are committed to delivering high-quality, reliable, and cost-effective IT services to help businesses thrive in an increasingly tech-driven world. Whether you're a small business or a growing enterprise, Apex IT Services is here to support you in navigating the complexities of technology.<br><br>
+                    <strong>Our Services</strong><br>
+                    At Apex IT Services, we specialize in a wide range of IT services designed to streamline your operations and ensure the seamless functioning of your technology infrastructure:<br>
+                    • <strong>Tech Procurement</strong>: We assist businesses with procuring the right equipment, including desktop PCs, laptops, servers, and other hardware. We ensure that the technology you invest in aligns with your business needs and budget, helping you make informed decisions.<br>
+                    • <strong>Network Setup & Maintenance</strong>: We design, implement, and maintain local area networks (LANs) tailored to your business. From configuring routers and switches to setting up firewalls and wireless access points (APs), we ensure that your network is secure, fast, and reliable.<br>
+                    • <strong>Web Application Development</strong>: Apex IT Services offers full-stack web application development services. Whether you need a custom website, an internal business tool, or an e-commerce platform, we can help bring your ideas to life. From front-end design to back-end functionality, we deliver scalable and user-friendly web solutions that meet your business objectives.<br>
+                    • <strong>Ongoing Support & Maintenance</strong>: We provide ongoing support to ensure your IT systems remain operational and up to date. From troubleshooting hardware and software issues to offering guidance on software updates and network optimizations, Apex IT Services is your go-to partner for tech support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section hidden">
+        <div class="content-container">
+            <h2>Contact Us</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Name" class="form-input">
+                <input type="email" placeholder="Email" class="form-input">
+                <textarea placeholder="Message" class="form-input"></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
